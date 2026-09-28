@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Assistência, OmniOS">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>OmniOS</title>
+
+    <link rel="icon" type="image/png" href="imagens/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="imagens/favicon/favicon.svg">
+    <link rel="shortcut icon" href="imagens/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagens/favicon/apple-touch-icon.png">
+
+    <meta name="apple-mobile-web-app-title" content="OmniOS">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icone">
+                <img src="imagens/logo.jpeg" alt="Logo OmniOS">
+            </div>
+
+            <h2>OmniOS</h2>
+
+        </div>
+
+
+        <!-- MENU -->
+        <nav class="menu">
+
+            <a href="#" class="menu-item ativo">
+                <span>⌂</span>
+                Visão Geral
+            </a>
+
+            <a href="#" class="menu-item">
+                <span>☷</span>
+                Ordens de Serviço
+            </a>
+
+            <a href="#" class="menu-item">
+                <span>╋</span>
+                Nova OS
+            </a>
+
+            <a href="#" class="menu-item">
+                <span>$$$</span>
+                Nova Venda
+            </a>
+
+        </nav>
+
+
+        <!-- PERFIS -->
+        <div class="barra-perfis">
+
+            <div class="perfil">
+
+                <img
+                    class="perfil-logo"
+                    src="imagens/perfil_1.png"
+                    alt="Daniel Gonçalves"
+                >
+
+                <div class="perfil-info">
+
+                    <span class="nomeperfil">
+                        Daniel
+                    </span>
+
+                    <p class="funcao-perfil">
+                        Administrador
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- LINHA SEPARADORA -->
+            <hr class="linha">
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="pagina">
+
+        <header class="topo">
+
+            <div>
+
+                <p class="caminho">
+                    Serviços / Visão Geral
+                </p>
+
+                <h1>Painel de Controle</h1>
+
+            </div>
+
+            <div class="data">
+                📅 Hoje
+            </div>
+
+        </header>
+
+
+        <main>
+
+            <!-- CARDS -->
+            <section class="cards">
+
+                <article class="card">
+
+                    <p>Ordens Abertas</p>
+
+                    <strong>0</strong>
+
+                </article>
+
+
+                <article class="card">
+
+                    <p>Em Execução</p>
+
+                    <strong>0</strong>
+
+                </article>
+
+
+                <article class="card">
+
+                    <p>Concluídos Hoje</p>
+
+                    <strong>0</strong>
+
+                </article>
+
+
+                <article class="card">
+
+                    <p>Valor Total do Mês</p>
+
+                    <strong>R$ 0,00</strong>
+
+                </article>
+
+            </section>
+
+
+            <!-- CONTEÚDO -->
+            <section class="conteudo">
+
+                <!-- ORDENS -->
+                <div class="painel ordens">
+
+                    <div class="painel-cabecalho">
+
+                        <h2>Ordens de Serviço Recentes</h2>
+
+                        <a href="#">
+                            Ver todas
+                        </a>
+
+                    </div>
+
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Aparelho</th>
+                                <th>Status</th>
+                                <th>Data</th>
+                                <th>Valor</th>
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            <tr class="tabela-vazia">
+
+                                <td colspan="6">
+                                    Nenhuma ordem de serviço cadastrada.
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- VOLUME SEMANAL -->
+                <div class="painel volume">
+
+                    <h2>Volume Semanal</h2>
+
+                    <p>
+                        Média de entrada por dia da semana
+                    </p>
+
+                    <div class="grafico-vazio">
+
+                        <span>
+                            Nenhum dado disponível
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
