@@ -1,0 +1,83 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    name: Verificar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Verificar sintaxe dos scripts
+        run: |
+          npm run check
+          find . -name '*.js' -not -path './node_modules/*' -print0 | xargs -0 -n1 node --check
+
+      - name: Compilar imagem
+        run: docker build -t omnios:ci .
+
+      - name: Testar contêiner
+        run: |
+          docker run -d --name omnios -p 8080:80 omnios:ci
+          for i in $(seq 1 30); do
+            [ "$(docker inspect -f '{{.State.Health.Status}}' omnios)" = healthy ] && break
+            sleep 1
+          done
+          docker inspect -f '{{.State.Health.Status}}' omnios | grep -q healthy
+
+          status=0
+          for pagina in "" Login Main Ordens "Nova Ordem" Detalhes Vendas "Nova Venda" Perfis Configuracoes; do
+            if [ -z "$pagina" ]; then url="http://localhost:8080/"; else url="http://localhost:8080/OmniOS%20-%20${pagina// /%20}/index.html"; fi
+            codigo=$(curl -s -o /dev/null -w '%{http_code}' "$url")
+            echo "$codigo $url"
+            [ "$codigo" = 200 ] || status=1
+          done
+          exit $status
+
+      - name: Logs do contêiner
+        if: failure()
+        run: docker logs omnios
+
+  cd:
+    name: Publicar no Cloudflare
+    needs: ci
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Publicar
+        run: npm run deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
