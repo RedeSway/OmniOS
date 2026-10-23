@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>OmniOS - Acesso</title><link rel="icon" href="../OmniOS%20-%20Main/imagens/favicon/favicon.ico"><link rel="stylesheet" href="../comum.css"></head>
+<body class="login" data-publica="sim">
+<main class="cartao-login">
+<div class="logo"><h1>OmniOS</h1></div><p>Gerencie ordens de serviço e vendas.</p>
+<div class="abas"><button type="button" class="botao" id="aba-entrar" aria-pressed="true">Entrar</button><button type="button" class="botao secundario" id="aba-registrar" aria-pressed="false">Criar conta</button></div>
+<form id="form-entrar" method="post"><div class="grade-form"><label>E-mail<input type="email" id="login-email" autocomplete="username" required></label><label>Senha<input type="password" id="login-senha" autocomplete="current-password" required></label></div><button type="submit" class="botao">Entrar no sistema</button></form>
+<form id="form-registrar" method="post" hidden><p id="aviso-cadastro" class="texto-ajuda"></p><div class="grade-form"><label>Nome<input id="registro-nome" autocomplete="name" maxlength="100" required></label><label>E-mail<input type="email" id="registro-email" autocomplete="email" maxlength="150" required></label><label>Senha<input type="password" id="registro-senha" autocomplete="new-password" minlength="8" required></label><label>Confirmar senha<input type="password" id="registro-confirmacao" autocomplete="new-password" minlength="8" required></label></div><button type="submit" class="botao">Cadastrar conta</button></form>
+<p id="mensagem-acesso" role="status" aria-live="polite"></p><p class="texto-ajuda">Demonstração acadêmica. As contas e os dados ficam neste navegador.</p>
+</main>
+<script src="../comum.js"></script><script src="../autenticacao.js"></script><script src="script.js"></script>
+</body></html>

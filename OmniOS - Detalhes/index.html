@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Assistência, OmniOS">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>OmniOS</title>
+
+    <link rel="icon" type="image/png" href="imagens/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="imagens/favicon/favicon.svg">
+    <link rel="shortcut icon" href="imagens/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagens/favicon/apple-touch-icon.png">
+
+    <meta name="apple-mobile-web-app-title" content="OmniOS">
+    <link rel="stylesheet" href="../comum.css">
+</head>
+
+<body data-acesso="ordens">
+
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icone">
+                <img src="imagens/logo.jpeg" alt="Logo OmniOS">
+            </div>
+
+            <h2>OmniOS</h2>
+
+        </div>
+
+
+        <!-- MENU -->
+        <nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item ativo" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
+
+
+        <!-- PERFIS -->
+        <div class="barra-perfis">
+
+            <div class="perfil">
+
+                <img
+                    class="perfil-logo"
+                    src="imagens/perfil_1.png"
+                    alt="Daniel Gonçalves"
+                >
+
+                <div class="perfil-info">
+
+                    <span class="nomeperfil">
+                        Daniel
+                    </span>
+
+                    <p class="funcao-perfil">
+                        Administrador
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button id="btn-sair" type="button" class="botao discreto">Sair da conta</button>
+            <!-- LINHA SEPARADORA -->
+            <hr class="linha">
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="pagina">
+
+        <header class="topo">
+
+            <div>
+
+                <p class="caminho">
+                    Serviços / Ordens / <span id="crumb-os">...</span>
+                </p>
+
+                <h1 id="titulo-os">Ordem de Serviço</h1>
+
+            </div>
+
+            <div class="data">
+                📅 Hoje
+            </div>
+
+        </header>
+
+
+        <main>
+
+            <!-- OS NÃO ENCONTRADA -->
+            <div id="nao-encontrada" class="painel aviso-vazio" hidden>
+                <p>Ordem de serviço não encontrada.</p>
+                <a href="../OmniOS%20-%20Ordens/index.html">Voltar para Ordens de Serviço</a>
+            </div>
+
+
+            <div id="conteudo-os" hidden>
+
+                <!-- ETIQUETAS + AÇÕES -->
+                <div class="acoes-topo">
+
+                    <div class="etiquetas">
+                        <span id="badge-status" class="status"></span>
+                        <span id="badge-prioridade" class="prioridade"></span>
+                    </div>
+
+                    <div class="acoes">
+
+                        <button type="button" class="btn-secundario" id="btn-imprimir">
+                            🖨 Imprimir Ficha
+                        </button>
+
+                        <select class="btn-secundario" id="sel-status">
+                            <option value="" selected disabled>Atualizar Status</option>
+                            <option>Aberto</option>
+                            <option>Em Andamento</option>
+                            <option>Concluído</option>
+                            <option>Cancelado</option>
+                        </select>
+
+                        <button type="button" class="btn-primario" id="btn-encerrar">
+                            Encerrar OS
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <section class="detalhes-grid">
+
+                    <div class="coluna-principal">
+
+                        <!-- DOSSIÊ -->
+                        <div class="painel bloco">
+
+                            <h2>Dossiê do Equipamento</h2>
+
+                            <div class="dossie">
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Cliente</span>
+                                    <span class="dado-valor" id="d-cliente"></span>
+                                </div>
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Contato</span>
+                                    <span class="dado-valor" id="d-telefone"></span>
+                                </div>
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Equipamento</span>
+                                    <span class="dado-valor" id="d-aparelho"></span>
+                                </div>
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Tipo de Aparelho</span>
+                                    <span class="dado-valor" id="d-tipo"></span>
+                                </div>
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Técnico Responsável</span>
+                                    <span class="dado-valor" id="d-tecnico"></span>
+                                </div>
+
+                                <div class="dado">
+                                    <span class="dado-rotulo">Previsão de Entrega</span>
+                                    <span class="dado-valor" id="d-previsao"></span>
+                                </div>
+
+                                <div class="dado largo">
+                                    <span class="dado-rotulo">Relato de Defeito</span>
+                                    <span class="dado-valor" id="d-problema"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PEÇAS -->
+                        <div class="painel bloco">
+
+                            <div class="bloco-cabecalho">
+                                <h2>Peças &amp; Insumos Utilizados</h2>
+
+                                <button type="button" class="btn-secundario pequeno" id="btn-lancar-peca">
+                                    + Lançar Peça
+                                </button>
+                            </div>
+
+                            <!-- formulário que abre ao clicar em "Lançar Peça" -->
+                            <div class="form-peca" id="form-peca" hidden>
+
+                                <input type="text" id="peca-nome" placeholder="Nome da peça ou insumo">
+                                <input type="number" id="peca-qtd" placeholder="Qtd" min="1" step="1" value="1">
+                                <input type="number" id="peca-valor" placeholder="Valor unitário (R$)" min="0" step="0.01">
+
+                                <button type="button" class="btn-primario pequeno" id="btn-salvar-peca">Adicionar</button>
+                                <button type="button" class="btn-secundario pequeno" id="btn-cancelar-peca">Cancelar</button>
+
+                            </div>
+
+                            <div id="lista-pecas"></div>
+
+                            <div class="totais">
+
+                                <div class="linha-total subtotal">
+                                    <span>Subtotal Peças</span>
+                                    <strong id="t-subtotal"></strong>
+                                </div>
+
+                                <div class="linha-total">
+                                    <span>Valor da Ordem</span>
+                                    <strong id="t-valor"></strong>
+                                </div>
+
+                                <div class="linha-total">
+                                    <span>Lucro líquido</span>
+                                    <strong id="t-lucro"></strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LINHA DO TEMPO -->
+                    <div class="painel bloco tempo">
+
+                        <h2>Linha do Tempo / Evolução</h2>
+
+                        <ul class="linha-tempo" id="linha-tempo"></ul>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- FICHA PARA IMPRESSÃO (só aparece na hora de imprimir) -->
+    <section id="ficha">
+
+        <div class="ficha-topo">
+            <h1 id="f-empresa">OmniOS</h1>
+            <p>Ficha de Ordem de Serviço</p><p id="f-contato"></p>
+        </div>
+
+        <div class="ficha-linha destaque">
+            <div><span>Ordem</span><strong id="f-codigo"></strong></div>
+            <div><span>Abertura</span><strong id="f-abertura"></strong></div>
+            <div><span>Status</span><strong id="f-status"></strong></div>
+            <div><span>Prioridade</span><strong id="f-prioridade"></strong></div>
+        </div>
+
+        <h3>Cliente</h3>
+        <div class="ficha-linha">
+            <div><span>Nome</span><strong id="f-cliente"></strong></div>
+            <div><span>Telefone</span><strong id="f-telefone"></strong></div>
+        </div>
+
+        <h3>Equipamento</h3>
+        <div class="ficha-linha">
+            <div><span>Tipo</span><strong id="f-tipo"></strong></div>
+            <div><span>Marca / Modelo</span><strong id="f-aparelho"></strong></div>
+            <div><span>Técnico</span><strong id="f-tecnico"></strong></div>
+            <div><span>Previsão de entrega</span><strong id="f-previsao"></strong></div>
+        </div>
+
+        <h3>Defeito relatado</h3>
+        <p class="ficha-texto" id="f-problema"></p>
+
+        <h3>Peças e insumos utilizados</h3>
+        <table class="ficha-tabela">
+            <thead>
+                <tr><th>Descrição</th><th class="direita">Qtd</th></tr>
+            </thead>
+            <tbody id="f-pecas"></tbody>
+        </table>
+
+        <div class="ficha-total">
+            <span>Valor total do serviço</span>
+            <strong id="f-total"></strong>
+        </div>
+
+        <div class="ficha-assinaturas">
+            <div><hr><span>Assinatura do cliente</span></div>
+            <div><hr><span>Responsável pela OmniOS</span></div>
+        </div>
+
+        <p class="ficha-rodape">
+            Este documento é uma ficha de ordem de serviço e não substitui a nota fiscal.
+        </p>    
+
+    </section>
+
+    <script src="../comum.js"></script>
+<script src="../autenticacao.js"></script>
+<script src="../dados.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>

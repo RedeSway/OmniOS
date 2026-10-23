@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Assistência, OmniOS">
+
+    <link rel="stylesheet" href="style.css">
+
+    <title>OmniOS</title>
+
+    <link rel="icon" type="image/png" href="imagens/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="imagens/favicon/favicon.svg">
+    <link rel="shortcut icon" href="imagens/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="imagens/favicon/apple-touch-icon.png">
+
+    <meta name="apple-mobile-web-app-title" content="OmniOS">
+    <link rel="stylesheet" href="../comum.css">
+</head>
+
+<body data-acesso="ordens">
+    <aside class="sidebar">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icone">
+                <img src="imagens/logo.jpeg" alt="Logo OmniOS">
+            </div>
+
+            <h2>OmniOS</h2>
+
+        </div>
+
+
+        <!-- MENU -->
+        <nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item ativo" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
+
+
+            <!-- PERFIS -->
+        <div class="barra-perfis">
+
+            <div class="perfil">
+
+                <img
+                    class="perfil-logo"
+                    src="imagens/perfil_1.png"
+                    alt="Daniel Gonçalves"
+                >
+
+                <div class="perfil-info">
+
+                    <span class="nomeperfil">
+                        Daniel
+                    </span>
+
+                    <p class="funcao-perfil">
+                        Administrador
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button id="btn-sair" type="button" class="botao discreto">Sair da conta</button>
+            <!-- LINHA SEPARADORA -->
+            <hr class="linha">
+
+        </div>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="pagina">
+
+        <header class="topo">
+
+            <div>
+
+                <p class="caminho">
+                    Serviços / Ordens / Criar
+                </p>
+
+                <h1>Nova Ordem de Serviço</h1>
+
+            </div>
+
+            <div class="data">
+                📅 Hoje
+            </div>
+
+        </header>
+
+        
+<main class="conteudo">
+
+    <div class="painel volume">
+
+        <!-- PRIMEIRA LINHA -->
+        <div class="linha-campos">
+
+            <div class="campo cliente-campo">
+                <p>
+                    <strong>Nome do Cliente</strong>
+                </p>
+
+                <input
+                    type="text"
+                    class="input-grande"
+                    placeholder="Digite o nome do Cliente"
+                >
+            </div>
+
+            <div class="campo telefone-campo">
+                <p>
+                    <strong>Telefone de Contato</strong>
+                </p>
+
+                <input
+            type="tel"
+            class="input-telefone"
+            id="telefone"
+            placeholder="(00) 00000-0000"
+            maxlength="15"
+            inputmode="numeric"
+>
+            </div>
+
+        </div>
+
+
+        <!-- SEGUNDA LINHA -->
+        <div class="linha-campos">
+
+            <div class="campo aparelho-campo">
+                <p>
+                    <strong>Tipo de Aparelho</strong>
+                </p>
+
+                <select class="input-aparelho">
+                    <option value="" selected disabled>
+                        Selecione o aparelho
+                    </option>
+                    <option>Computador Desktop</option>
+                    <option>Notebook</option>
+                    <option>Celular</option>
+                    <option>Tablet</option>
+                    <option>Outro</option>
+                </select>
+            </div>
+
+            <div class="campo modelo-campo">
+                <p>
+                    <strong>Marca e Modelo</strong>
+                </p>
+
+                <input
+                    type="text"
+                    class="input-modelo"
+                    placeholder="Digite a marca e o modelo"
+                >
+            </div>
+
+            <div class="campo valor-campo">
+                <p>
+                    <strong>Valor da Ordem</strong>
+                </p>
+
+                <div class="valor-input">
+                    <span class="prefixo-valor">R$</span>
+                    <input
+                        type="number"
+                        class="input-valor"
+                        id="valor"
+                        placeholder="0,00"
+                        step="0.01"
+                        min="0">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- DESCRIÇÃO -->
+        <div class="campo descricao-campo">
+
+            <p>
+                <strong>Descrição do Problema</strong>
+            </p>
+
+            <textarea
+                class="descricao"
+                placeholder="Descreva o problema apresentado pelo aparelho..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- PRIORIDADE -->
+        <div class="campo prioridade-campo">
+
+            <p>
+                <strong>Prioridade</strong>
+            </p>
+
+            <div class="prioridades">
+
+                <button type="button">Baixa</button>
+                <button type="button" class="prioridade-ativa">Média</button>
+                <button type="button">Alta</button>
+                <button type="button">Urgente</button>
+
+            </div>
+
+        </div>
+
+
+        <!-- TÉCNICO + DATA -->
+        <div class="linha-campos">
+
+            <div class="campo tecnico-campo">
+                <p>
+                    <strong>Técnico Responsável</strong>
+                </p>
+
+                <select class="input-tecnico">
+                    <option value="" selected disabled>
+                        Selecione o técnico
+                    </option>
+                    <option>Daniel Gonçalves</option>
+                </select>
+            </div>
+
+            <div class="campo data-campo">
+                <p>
+                    <strong>Previsão de Entrega</strong>
+                </p>
+
+                <input
+                    type="date"
+                    class="input-data"
+                >
+            </div>
+
+        </div>
+
+        <!-- FINAL -->
+        <div class="final-painel">
+
+            <div>
+                <h3>Abertura de Chamado Técnico</h3>
+
+                <p>
+                    Preencha as informações detalhadas para encaminhar a OS à equipe.
+                </p>
+            </div>
+
+            <div class="botoes">
+
+                <button type="button" class="btn-cancelar">
+                    Cancelar
+                </button>
+
+                <button type="button" class="btn-salvar">
+                    Salvar Ordem
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+</div>
+
+<script src="../comum.js"></script>
+<script src="../autenticacao.js"></script>
+<script src="../dados.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>

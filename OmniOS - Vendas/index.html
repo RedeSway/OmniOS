@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniOS - Vendas</title>
+<link rel="icon" href="../OmniOS%20-%20Main/imagens/favicon/favicon.ico">
+<link rel="stylesheet" href="../OmniOS%20-%20Main/style.css">
+<link rel="stylesheet" href="../comum.css">
+</head>
+<body data-acesso="vendas">
+<aside class="sidebar">
+<div class="logo"><div class="logo-icone"><img src="../OmniOS%20-%20Main/imagens/logo.jpeg" alt="Logo OmniOS"></div><h2>OmniOS</h2></div>
+<nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item ativo" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
+<div class="barra-perfis"><div class="perfil"><img class="perfil-logo" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Perfil"><div class="perfil-info"><span class="nomeperfil"></span><p class="funcao-perfil"></p></div></div><button id="btn-sair" type="button" class="botao discreto">Sair da conta</button></div>
+</aside>
+<div class="pagina"><header class="topo"><div><p class="caminho">OmniOS / Vendas</p><h1>Vendas</h1></div><div class="data">📅 Hoje</div></header>
+<main class="area-pagina"><div class="barra-acoes"><p>Consulte, edite e acompanhe as vendas registradas.</p><a class="botao" href="../OmniOS%20-%20Nova%20Venda/index.html">+ Nova venda</a></div>
+<section class="cards resumo-vendas" aria-label="Resumo das vendas filtradas"><article class="card"><p>Vendas encontradas</p><strong id="total-vendas">0</strong></article><article class="card"><p>Total concluído</p><strong id="total-valor">R$ 0,00</strong></article><article class="card"><p>Canceladas</p><strong id="total-canceladas">0</strong></article></section>
+<section class="bloco-form"><div class="barra-filtros"><label class="filtro-campo">Buscar venda<input id="busca-venda" type="search" placeholder="Número, cliente, item ou responsável"></label><label class="filtro-campo">Status<select id="filtro-status"><option value="Todos">Todos</option><option>Concluída</option><option>Cancelada</option></select></label><label class="filtro-campo">De<input id="data-inicio" type="date"></label><label class="filtro-campo">Até<input id="data-fim" type="date"></label><button id="btn-exportar" type="button" class="botao secundario" data-permissao="exportar">Exportar dados</button></div>
+<div class="tabela-rolagem"><table class="tabela-dados"><thead><tr><th>Número</th><th>Cliente</th><th>Item / Modelo</th><th>Responsável</th><th>Data</th><th>Status</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="lista-vendas"></tbody></table></div><div class="paginacao"><span id="contagem-vendas"></span><div id="paginas-vendas" class="paginas"></div></div></section></main></div>
+<script src="../comum.js"></script><script src="../autenticacao.js"></script><script src="../dados.js"></script><script src="script.js"></script>
+</body></html>

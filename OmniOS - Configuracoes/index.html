@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniOS - Configurações</title>
+<link rel="icon" href="../OmniOS%20-%20Main/imagens/favicon/favicon.ico">
+<link rel="stylesheet" href="../OmniOS%20-%20Main/style.css">
+<link rel="stylesheet" href="../comum.css">
+</head>
+<body data-acesso="">
+<aside class="sidebar">
+<div class="logo"><div class="logo-icone"><img src="../OmniOS%20-%20Main/imagens/logo.jpeg" alt="Logo OmniOS"></div><h2>OmniOS</h2></div>
+<nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item ativo"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
+<div class="barra-perfis"><div class="perfil"><img class="perfil-logo" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Perfil"><div class="perfil-info"><span class="nomeperfil"></span><p class="funcao-perfil"></p></div></div><button id="btn-sair" type="button" class="botao discreto">Sair da conta</button></div>
+</aside>
+<div class="pagina"><header class="topo"><div><p class="caminho">OmniOS / Configurações</p><h1>Configurações</h1></div><div class="data">📅 Hoje</div></header>
+<main class="area-pagina"><section class="bloco-form"><h2>Minha conta</h2><form id="form-conta"><div class="grade-form"><label>Nome<input id="conta-nome" required maxlength="100"></label><label>E-mail<input id="conta-email" type="email" required maxlength="150"></label><label>Senha atual<input id="conta-senha-atual" type="password" autocomplete="current-password" required></label><label>Nova senha (opcional)<input id="conta-nova-senha" type="password" minlength="8" autocomplete="new-password"></label></div><button class="botao" type="submit">Atualizar minha conta</button><p id="mensagem-conta" role="status" aria-live="polite"></p></form></section>
+<section class="bloco-form" data-permissao="configuracoes"><h2>Dados da assistência</h2><form id="form-configuracoes"><div class="grade-form"><label>Nome da assistência<input id="empresa-nome" maxlength="100" required></label><label>Telefone<input id="empresa-telefone" type="tel" maxlength="15"></label><label>Endereço<input id="empresa-endereco" maxlength="200"></label></div><p class="texto-ajuda">Esses dados aparecem na ficha impressa da ordem de serviço.</p><button class="botao" type="submit">Salvar configurações</button><p id="mensagem-configuracoes" role="status" aria-live="polite"></p></form></section>
+<section class="bloco-form" data-permissao="exportar"><h2>Exportar dados</h2><p>Baixe um backup JSON com todas as ordens e vendas. Contas e senhas não fazem parte do arquivo.</p><button id="exportar-tudo" type="button" class="botao secundario">Exportar ordens e vendas</button></section>
+<section class="bloco-form" data-permissao="importar"><h2>Importar backup</h2><p>Selecione um backup exportado pelo OmniOS. Arquivos antigos que contêm apenas ordens também são aceitos.</p><form id="form-importar"><div class="grade-form"><label>Arquivo JSON<input id="arquivo-backup" type="file" accept=".json,application/json" required></label><label>Como importar<select id="modo-importar"><option value="mesclar">Adicionar sem substituir números existentes</option><option value="substituir">Substituir os dados presentes no arquivo</option></select></label></div><p class="texto-ajuda">Ao adicionar, registros com números que já existem são mantidos como estão. Confira o resumo antes de confirmar.</p><button class="botao" type="submit">Ler arquivo e importar</button><p id="mensagem-importar" role="status" aria-live="polite"></p></form></section></main></div>
+<script src="../comum.js"></script><script src="../autenticacao.js"></script><script src="../dados.js"></script><script src="script.js"></script>
+</body></html>

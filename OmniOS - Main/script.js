@@ -1,16 +1,7 @@
-// as ordens ficam salvas no localStorage por enquanto (ainda nao tem backend)
 const CHAVE = 'omnios_ordens';
 
 function carregarOrdens() {
-    try {
-        return JSON.parse(localStorage.getItem(CHAVE)) || [];
-    } catch (e) {
-        return [];
-    }
-}
-
-function salvarOrdens(lista) {
-    localStorage.setItem(CHAVE, JSON.stringify(lista));
+    return lerLista(CHAVE);
 }
 
 function dinheiro(valor) {
@@ -18,55 +9,80 @@ function dinheiro(valor) {
 }
 
 function dataCurta(iso) {
-    return new Date(iso).toLocaleDateString('pt-BR');
+    return new Date(iso).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 }
 
 function mesmoDia(a, b) {
     return a.toDateString() === b.toDateString();
 }
 
-// evita que o nome do cliente quebre o html
+function codigo(id) {
+    return 'OS-' + String(id).padStart(4, '0');
+}
+
+// Valores monetários são arredondados para centavos.
+function arredondar(n) {
+    return Math.round((Number(n) || 0) * 100) / 100;
+}
+
+function custoPecas(o) {
+    return arredondar((o.pecas || []).reduce(
+        (total, p) => total + (Number(p.qtd) || 0) * (Number(p.valorUnit) || 0), 0
+    ));
+}
+
+// Lucro = valor do serviço menos o custo das peças.
+function lucro(o) {
+    return arredondar((Number(o.valor) || 0) - custoPecas(o));
+}
+
+function dinheiroSinal(valor) {
+    return (valor >= 0 ? '+' : '-') + dinheiro(Math.abs(valor));
+}
+
+function lucroHtml(o) {
+    if (!(o.pecas && o.pecas.length) || o.status === 'Cancelado') return '';
+    const l = lucro(o);
+    return ` <span class="lucro ${l >= 0 ? 'positivo' : 'negativo'}">${dinheiroSinal(l)}</span>`;
+}
+
 function esc(txt) {
     const div = document.createElement('div');
     div.textContent = txt;
-    return div.innerHTML;
+    return div.innerHTML.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
 function classeStatus(status) {
-    if (status === 'Em aberto') return 'aberto';
-    if (status === 'Em andamento') return 'andamento';
-    if (status === 'Finalizado') return 'finalizado';
+    if (status === 'Aberto') return 'aberto';
+    if (status === 'Em Andamento') return 'andamento';
+    if (status === 'Concluído') return 'concluido';
     return 'cancelado';
 }
 
-
-// ---------- cards ----------
 function atualizarCards(ordens) {
     const hoje = new Date();
     const valores = document.querySelectorAll('.card strong');
 
-    const abertas = ordens.filter(o => o.status === 'Em aberto').length;
-    const execucao = ordens.filter(o => o.status === 'Em andamento').length;
+    const abertas = ordens.filter(o => o.status === 'Aberto').length;
+    const execucao = ordens.filter(o => o.status === 'Em Andamento').length;
     const concluidasHoje = ordens.filter(o =>
-        o.status === 'Finalizado' && o.finalizadaEm && mesmoDia(new Date(o.finalizadaEm), hoje)
+        o.status === 'Concluído' && o.finalizadaEm && mesmoDia(new Date(o.finalizadaEm), hoje)
     ).length;
 
     let totalMes = 0;
     ordens.forEach(o => {
         const d = new Date(o.data);
         if (o.status !== 'Cancelado' && d.getMonth() === hoje.getMonth() && d.getFullYear() === hoje.getFullYear()) {
-            totalMes += Number(o.valor);
+            totalMes += lucro(o);
         }
     });
 
     valores[0].textContent = abertas;
     valores[1].textContent = execucao;
     valores[2].textContent = concluidasHoje;
-    valores[3].textContent = dinheiro(totalMes);
+    valores[3].textContent = dinheiro(arredondar(totalMes));
 }
 
-
-// ---------- tabela ----------
 function montarTabela(ordens) {
     const tbody = document.querySelector('.ordens tbody');
 
@@ -78,159 +94,83 @@ function montarTabela(ordens) {
         return;
     }
 
-    // so as 5 mais novas
-    const recentes = [...ordens].sort((a, b) => new Date(b.data) - new Date(a.data)).slice(0, 5);
+    const recentes = [...ordens].sort((a, b) => b.id - a.id).slice(0, 5);
 
     tbody.innerHTML = recentes.map(o => `
-        <tr>
-            <td>#${o.id}</td>
+        <tr data-id="${o.id}">
+            <td>${codigo(o.id)}</td>
             <td>${esc(o.cliente)}</td>
             <td>${esc(o.aparelho)}</td>
-            <td><span class="status ${classeStatus(o.status)}">${o.status}</span></td>
+            <td><span class="status ${classeStatus(o.status)}">${esc(o.status)}</span></td>
             <td>${dataCurta(o.data)}</td>
-            <td>${dinheiro(o.valor)}</td>
+            <td>${dinheiro(o.valor)}${lucroHtml(o)}</td>
         </tr>
     `).join('');
 }
 
-
-// ---------- grafico da semana ----------
 function montarGrafico(ordens) {
-    // depois do primeiro desenho a classe muda, entao pego pela posicao
     const area = document.querySelector('.volume > div');
     const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    const contagem = [0, 0, 0, 0, 0, 0, 0];
+    const totais = [0, 0, 0, 0, 0, 0, 0];
 
-    // conta so os ultimos 7 dias
     const limite = new Date();
     limite.setHours(0, 0, 0, 0);
     limite.setDate(limite.getDate() - 6);
 
     ordens.forEach(o => {
+        if (o.status === 'Cancelado') return;
         const d = new Date(o.data);
-        if (d >= limite) contagem[d.getDay()]++;
+        if (d >= limite) totais[d.getDay()] += lucro(o);
     });
 
-    const maior = Math.max(...contagem);
-    if (maior === 0) {
+    const maior = Math.max(...totais);
+    if (maior <= 0) {
         area.className = 'grafico-vazio';
         area.innerHTML = '<span>Nenhum dado disponível</span>';
         return;
     }
 
     area.className = 'grafico';
-    area.innerHTML = contagem.map((qtd, i) => `
-        <div class="coluna">
-            <span class="qtd">${qtd || ''}</span>
-            <div class="barra" style="height: ${(qtd / maior) * 100}%"></div>
+    area.innerHTML = totais.map((total, i) => `
+        <div class="coluna" title="${dias[i]}: ${dinheiro(arredondar(total))}">
+            <div class="barra-area">
+                <div class="barra" style="height: ${total > 0 ? (total / maior) * 100 : 0}%"></div>
+            </div>
             <span class="dia">${dias[i]}</span>
         </div>
     `).join('');
 }
 
-
-// ---------- modal nova OS ----------
-function abrirModal() {
-    const fundo = document.createElement('div');
-    fundo.className = 'modal-fundo';
-    fundo.innerHTML = `
-        <form class="modal">
-            <h2>Nova Ordem de Serviço</h2>
-
-            <label>Cliente
-                <input name="cliente" required>
-            </label>
-
-            <label>Aparelho
-                <input name="aparelho" placeholder="Ex: iPhone 11, Dell G15..." required>
-            </label>
-
-            <label>Tipo
-                <select name="tipo">
-                    <option>Celular</option>
-                    <option>PC</option>
-                    <option>Notebook</option>
-                </select>
-            </label>
-
-            <label>Valor (R$)
-                <input name="valor" type="number" min="0" step="0.01" value="0">
-            </label>
-
-            <div class="modal-botoes">
-                <button type="button" class="btn-cancelar">Cancelar</button>
-                <button type="submit" class="btn-salvar">Salvar</button>
-            </div>
-        </form>
-    `;
-    document.body.appendChild(fundo);
-    fundo.querySelector('input').focus();
-
-    const fechar = () => fundo.remove();
-
-    fundo.querySelector('.btn-cancelar').addEventListener('click', fechar);
-    fundo.addEventListener('click', e => {
-        if (e.target === fundo) fechar();
-    });
-
-    fundo.querySelector('form').addEventListener('submit', e => {
-        e.preventDefault();
-        const campos = e.target.elements;
-        const ordens = carregarOrdens();
-        const ultimoId = ordens.reduce((max, o) => Math.max(max, o.id), 0);
-
-        ordens.push({
-            id: ultimoId + 1,
-            cliente: campos.cliente.value.trim(),
-            aparelho: campos.aparelho.value.trim(),
-            tipo: campos.tipo.value,
-            status: 'Em aberto',
-            data: new Date().toISOString(),
-            valor: parseFloat(campos.valor.value) || 0
-        });
-
-        salvarOrdens(ordens);
-        fechar();
-        atualizarTela();
-        aviso('OS criada!');
-    });
-}
-
-function aviso(msg) {
-    const div = document.createElement('div');
-    div.className = 'aviso';
-    div.textContent = msg;
-    document.body.appendChild(div);
-    setTimeout(() => div.remove(), 2500);
-}
-
-
 function atualizarTela() {
-    const ordens = carregarOrdens();
-    atualizarCards(ordens);
-    montarTabela(ordens);
-    montarGrafico(ordens);
+    if (!usuarioAtual()) return;
+    if (!pode('ordens')) {
+        document.querySelector('.cards').hidden = true;
+        document.querySelector('.conteudo').hidden = true;
+        return;
+    }
+    try {
+        const ordens = carregarOrdens();
+        atualizarCards(ordens);
+        montarTabela(ordens);
+        montarGrafico(ordens);
+    } catch (e) {
+        mostrarAviso('Não foi possível carregar as ordens. Verifique o armazenamento do navegador.', 'erro');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    if (!usuarioAtual()) return;
+    if (new URLSearchParams(location.search).get('acesso') === 'negado') {
+        mostrarAviso('Seu perfil não tem acesso àquela página.', 'erro');
+    }
     const hoje = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' });
     document.querySelector('.data').textContent = '📅 ' + hoje;
 
-    document.querySelector('#btn-nova-os').addEventListener('click', e => {
-        e.preventDefault();
-        abrirModal();
-    });
-
-    document.querySelector('#btn-nova-venda').addEventListener('click', e => {
-        e.preventDefault();
-        aviso('Vendas ainda não está pronto');
+    document.querySelector('.ordens tbody').addEventListener('click', e => {
+        const linha = e.target.closest('tr[data-id]');
+        if (!linha) return;
+        location.href = '../OmniOS%20-%20Detalhes/index.html?id=' + linha.dataset.id;
     });
 
     atualizarTela();
-
-    // veio do botao "Nova OS" da tela de ordens
-    if (location.hash === '#nova-os') {
-        history.replaceState(null, '', location.pathname);
-        abrirModal();
-    }
 });

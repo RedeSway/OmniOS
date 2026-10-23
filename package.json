@@ -1,0 +1,22 @@
+{
+  "name": "omnios",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "OmniOS no Cloudflare Containers, servido com Nginx",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "containers:status": "wrangler containers list",
+    "check": "node --check cloudflare/index.js"
+  },
+  "dependencies": {
+    "@cloudflare/containers": "0.0.30"
+  },
+  "devDependencies": {
+    "wrangler": "4.136.1"
+  }
+}

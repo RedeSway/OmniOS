@@ -16,9 +16,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="imagens/favicon/apple-touch-icon.png">
 
     <meta name="apple-mobile-web-app-title" content="OmniOS">
+    <link rel="stylesheet" href="../comum.css">
 </head>
 
-<body>
+<body data-acesso="ordens">
 
     <aside class="sidebar">
 
@@ -35,29 +36,15 @@
 
 
         <!-- MENU -->
-        <nav class="menu">
-
-            <a href="../OmniOS%20-%20Main/index.html" class="menu-item">
-                <span>⌂</span>
-                Visão Geral
-            </a>
-
-            <a href="../OmniOS%20-%20Ordens/index.html" class="menu-item ativo">
-                <span>☷</span>
-                Ordens de Serviço
-            </a>
-
-            <a href="../OmniOS%20-%20Main/index.html#nova-os" id="btn-nova-os" class="menu-item">
-                <span>╋</span>
-                Nova OS
-            </a>
-
-            <a href="#" id="btn-nova-venda" class="menu-item">
-                <span>$$$</span>
-                Nova Venda
-            </a>
-
-        </nav>
+        <nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item ativo" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
 
 
         <!-- PERFIS -->
@@ -86,6 +73,7 @@
             </div>
 
 
+            <button id="btn-sair" type="button" class="botao discreto">Sair da conta</button>
             <!-- LINHA SEPARADORA -->
             <hr class="linha">
 
@@ -135,42 +123,38 @@
                     </div>
 
                     <!--SELEÇÃO FILTRO -->
-                    <div class="filtro_dispositivo">
-                        <select>
-                            <option value="Todos">Dispositivo: Todos</option>
-                            <option value="Celular">Dispositivo: Celular</option>
-                            <option value="PC">Dispositivo: PC</option>
-                            <option value="Notebook">Dispositivo: Notebook</option>
-                        </select>
-
-                    </div>
-
-
                     <div class="filtro_finalizado">
                         <select>
                             <option value="Todos">Status: Todos</option>
-                            <option value="Em aberto">Status: Em aberto</option>
-                            <option value="Em andamento">Status: Em andamento</option>
-                            <option value="Finalizado">Status: Finalizado</option>
+                            <option value="Aberto">Status: Aberto</option>
+                            <option value="Em Andamento">Status: Em Andamento</option>
+                            <option value="Concluído">Status: Concluído</option>
                             <option value="Cancelado">Status: Cancelado</option>
                         </select>
 
                     </div>
+
+
+                    <div class="filtro_prioridade">
+                        <select>
+                            <option value="Todas">Prioridade: Todas</option>
+                            <option value="Baixa">Prioridade: Baixa</option>
+                            <option value="Média">Prioridade: Média</option>
+                            <option value="Alta">Prioridade: Alta</option>
+                            <option value="Urgente">Prioridade: Urgente</option>
+                        </select>
+
+                    </div>
+
+                    <button type="button" class="btn-exportar" id="btn-exportar" data-permissao="exportar">
+                        ⭳ Exportar Backup
+                    </button>
 
                 </div>
 
 
                 <!-- ORDENS -->
                 <div class="painel ordens">
-
-                    <div class="painel-cabecalho">
-
-                        <h2>Ordens de Serviço Recentes</h2>
-
-                        <a href="#">Ver todas</a>
-
-                    </div>
-
 
                     <table>
 
@@ -180,6 +164,9 @@
                                 <th>ID</th>
                                 <th>Cliente</th>
                                 <th>Aparelho</th>
+                                <th>Problema</th>
+                                <th>Técnico</th>
+                                <th>Prioridade</th>
                                 <th>Status</th>
                                 <th>Data</th>
                                 <th>Valor</th>
@@ -192,7 +179,7 @@
 
                             <tr class="tabela-vazia">
 
-                                <td colspan="6">
+                                <td colspan="9">
                                     Nenhuma ordem de serviço cadastrada.
                                 </td>
 
@@ -202,6 +189,15 @@
 
                     </table>
 
+                    <!-- RODAPÉ DA TABELA -->
+                    <div class="paginacao">
+
+                        <span class="contagem"></span>
+
+                        <div class="paginas"></div>
+
+                    </div>
+
                 </div>
 
             </section>
@@ -210,8 +206,11 @@
 
     </div>
 
-    <script src="script.js"></script>
+    <script src="../comum.js"></script>
+<script src="../autenticacao.js"></script>
+<script src="../dados.js"></script>
+<script src="script.js"></script>
 
 </body>
 
-</html>
+</html>

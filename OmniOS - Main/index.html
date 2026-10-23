@@ -16,9 +16,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="imagens/favicon/apple-touch-icon.png">
 
     <meta name="apple-mobile-web-app-title" content="OmniOS">
+    <link rel="stylesheet" href="../comum.css">
 </head>
 
-<body>
+<body data-acesso="">
 
     <aside class="sidebar">
 
@@ -35,29 +36,15 @@
 
 
         <!-- MENU -->
-        <nav class="menu">
-
-            <a href="../OmniOS%20-%20Main/index.html" class="menu-item ativo">
-                <span>⌂</span>
-                Visão Geral
-            </a>
-
-            <a href="../OmniOS%20-%20Ordens/index.html" class="menu-item">
-                <span>☷</span>
-                Ordens de Serviço
-            </a>
-
-            <a href="#" id="btn-nova-os" class="menu-item">
-                <span>╋</span>
-                Nova OS
-            </a>
-
-            <a href="#" id="btn-nova-venda" class="menu-item">
-                <span>$$$</span>
-                Nova Venda
-            </a>
-
-        </nav>
+        <nav class="menu" aria-label="Menu principal">
+<a href="../OmniOS%20-%20Main/index.html" class="menu-item ativo"><span aria-hidden="true">⌂</span>Visão Geral</a>
+<a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
+<a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
+<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
+<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
+</nav>
 
 
         <!-- PERFIS -->
@@ -86,6 +73,7 @@
             </div>
 
 
+            <button id="btn-sair" type="button" class="botao discreto">Sair da conta</button>
             <!-- LINHA SEPARADORA -->
             <hr class="linha">
 
@@ -117,6 +105,7 @@
 
 
         <main>
+<div class="boas-vindas" style="padding: 20px 30px"><p>Bem-vindo ao OmniOS. Use o menu para acessar suas funções.</p></div>
 
             <!-- CARDS -->
             <section class="cards">
@@ -186,7 +175,7 @@
                                 <th>Aparelho</th>
                                 <th>Status</th>
                                 <th>Data</th>
-                                <th>Valor</th>
+                                <th>Valores</th>
                             </tr>
 
                         </thead>
@@ -234,8 +223,11 @@
 
     </div>
 
+    <script src="../comum.js"></script>
+<script src="../autenticacao.js"></script>
+<script src="../dados.js"></script>
     <script src="script.js"></script>
 
 </body>
 
-</html>
+</html>

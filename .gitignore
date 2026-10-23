@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+*.zip
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
