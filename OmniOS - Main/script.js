@@ -61,7 +61,7 @@ function classeStatus(status) {
 
 function atualizarCards(ordens) {
     const hoje = new Date();
-    const valores = document.querySelectorAll('.card strong');
+    const valores = document.querySelectorAll('.cards .card-ordem strong');
 
     const abertas = ordens.filter(o => o.status === 'Aberto').length;
     const execucao = ordens.filter(o => o.status === 'Em Andamento').length;
@@ -109,9 +109,9 @@ function montarTabela(ordens) {
 }
 
 function montarGrafico(ordens) {
-    const area = document.querySelector('.volume > div');
+    const area = document.querySelector('.volume .grafico-vazio, .volume .grafico');
     const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-    const totais = [0, 0, 0, 0, 0, 0, 0];
+    const volumes = dias.map(() => ({ ordens: 0, vendas: 0 }));
 
     const limite = new Date();
     limite.setHours(0, 0, 0, 0);
@@ -120,9 +120,19 @@ function montarGrafico(ordens) {
     ordens.forEach(o => {
         if (o.status === 'Cancelado') return;
         const d = new Date(o.data);
-        if (d >= limite) totais[d.getDay()] += lucro(o);
+        if (d >= limite) volumes[d.getDay()].ordens++;
     });
 
+    lerLista('omnios_vendas').forEach(v => {
+        if (v.status === 'Cancelada' || !v.data) return;
+        const partes = String(v.data).split('-').map(Number);
+        const d = partes.length === 3
+            ? new Date(partes[0], partes[1] - 1, partes[2])
+            : new Date(v.data);
+        if (d >= limite) volumes[d.getDay()].vendas++;
+    });
+
+    const totais = volumes.map(volume => volume.ordens + volume.vendas);
     const maior = Math.max(...totais);
     if (maior <= 0) {
         area.className = 'grafico-vazio';
@@ -131,14 +141,43 @@ function montarGrafico(ordens) {
     }
 
     area.className = 'grafico';
-    area.innerHTML = totais.map((total, i) => `
-        <div class="coluna" title="${dias[i]}: ${dinheiro(arredondar(total))}">
+    area.innerHTML = volumes.map((volume, i) => {
+        const total = volume.ordens + volume.vendas;
+        const altura = (total / maior) * 100;
+        const percentualOrdens = total ? (volume.ordens / total) * 100 : 0;
+        const percentualVendas = total ? (volume.vendas / total) * 100 : 0;
+        return `
+        <div class="coluna" title="${dias[i]}: ${volume.ordens} ordem(ns), ${volume.vendas} venda(s)">
             <div class="barra-area">
-                <div class="barra" style="height: ${total > 0 ? (total / maior) * 100 : 0}%"></div>
+                <div class="barra" style="height: ${altura}%">
+                    <div class="barra-ordens" style="height: ${percentualOrdens}%"></div>
+                    <div class="barra-vendas" style="height: ${percentualVendas}%"></div>
+                </div>
             </div>
             <span class="dia">${dias[i]}</span>
         </div>
-    `).join('');
+    `;
+    }).join('');
+}
+
+function atualizarResumoVendas() {
+    const vendas = lerLista('omnios_vendas').sort((a, b) => b.id - a.id);
+    const concluidas = vendas.filter(v => v.status !== 'Cancelada');
+    const total = concluidas.reduce((soma, v) => soma + (Number(v.valor) || 0), 0);
+    const fmt = valor => Number(valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const totalEl = document.getElementById('painel-total-vendas');
+    if (!totalEl) return;
+    totalEl.textContent = vendas.length;
+    document.getElementById('painel-faturamento-vendas').textContent = fmt(total);
+    document.getElementById('painel-vendas-canceladas').textContent = vendas.length - concluidas.length;
+    document.getElementById('painel-ticket-medio').textContent = fmt(concluidas.length ? total / concluidas.length : 0);
+    const corpo = document.getElementById('painel-vendas-recentes');
+    corpo.innerHTML = vendas.length ? vendas.slice(0, 5).map(v => `
+      <tr><td>VD-${String(v.id).padStart(4, '0')}</td><td>${esc(v.cliente || '')}</td>
+      <td>${esc(v.item || '')}${v.modelo ? ' / ' + esc(v.modelo) : ''}</td>
+      <td>${v.data ? String(v.data).split('-').reverse().join('/') : '—'}</td>
+      <td>${v.status === 'Cancelada' ? 'Cancelada' : 'Concluída'}</td><td>${fmt(v.valor)}</td></tr>`).join('')
+      : '<tr class="tabela-vazia"><td colspan="6">Nenhuma venda cadastrada.</td></tr>';
 }
 
 function atualizarTela() {
@@ -149,6 +188,7 @@ function atualizarTela() {
         return;
     }
     try {
+        atualizarResumoVendas();
         const ordens = carregarOrdens();
         atualizarCards(ordens);
         montarTabela(ordens);

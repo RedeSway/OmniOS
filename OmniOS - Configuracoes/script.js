@@ -4,23 +4,6 @@ function mensagemConfiguracao(id, texto, erro = false) {
     elemento.className = erro ? 'erro' : 'sucesso';
 }
 
-document.getElementById('form-conta').addEventListener('submit', async evento => {
-    evento.preventDefault();
-    const botao = evento.target.querySelector('button[type="submit"]');
-    botao.disabled = true;
-    try {
-        await atualizarMinhaConta(document.getElementById('conta-nome').value,
-            document.getElementById('conta-email').value,
-            document.getElementById('conta-senha-atual').value,
-            document.getElementById('conta-nova-senha').value);
-        document.getElementById('conta-senha-atual').value = '';
-        document.getElementById('conta-nova-senha').value = '';
-        iniciarAcesso();
-        mensagemConfiguracao('mensagem-conta', 'Sua conta foi atualizada.');
-    } catch (erro) {
-        mensagemConfiguracao('mensagem-conta', erro.message, true);
-    } finally { botao.disabled = false; }
-});
 document.getElementById('form-configuracoes').addEventListener('submit', evento => {
     evento.preventDefault();
     if (!exigirPermissao('configuracoes')) return;
@@ -66,8 +49,6 @@ document.getElementById('form-importar').addEventListener('submit', async evento
 document.addEventListener('DOMContentLoaded', () => {
     const usuario = usuarioAtual();
     if (!usuario) return;
-    document.getElementById('conta-nome').value = usuario.nome;
-    document.getElementById('conta-email').value = usuario.email;
     try {
         const dados = configuracoesSalvas();
         document.getElementById('empresa-nome').value = dados.nome;

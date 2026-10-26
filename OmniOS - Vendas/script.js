@@ -4,16 +4,15 @@ let paginaVendas = 1;
 function filtrarVendas(vendas) {
     const termo = document.getElementById('busca-venda').value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
     const status = document.getElementById('filtro-status').value;
-    const inicio = document.getElementById('data-inicio').value;
-    const fim = document.getElementById('data-fim').value;
-    if (inicio && fim && inicio > fim) throw new Error('A data inicial deve ser anterior à data final.');
+    const periodo = document.getElementById('filtro-periodo').value;
+    const hoje = new Date();
     return vendas.filter(venda => {
         const texto = `VD-${String(venda.id).padStart(4, '0')} ${venda.cliente} ${venda.item} ${venda.modelo} ${venda.responsavel}`
             .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
         if (termo && !texto.includes(termo)) return false;
         if (status !== 'Todos' && (venda.status || 'Concluída') !== status) return false;
-        if (inicio && venda.data < inicio) return false;
-        if (fim && venda.data > fim) return false;
+        if (periodo === 'Hoje' && venda.data !== hoje.toLocaleDateString('sv-SE')) return false;
+        if (periodo === 'Mes' && (!venda.data || venda.data.slice(0, 7) !== hoje.toLocaleDateString('sv-SE').slice(0, 7))) return false;
         return true;
     });
 }
@@ -27,28 +26,21 @@ function listarVendas() {
         paginaVendas = Math.min(paginaVendas, paginas);
         const inicio = (paginaVendas - 1) * VENDAS_POR_PAGINA;
         const visiveis = vendas.slice(inicio, inicio + VENDAS_POR_PAGINA);
-        const concluidas = vendas.filter(venda => venda.status !== 'Cancelada');
-        const total = concluidas.reduce((soma, venda) => soma + Math.round(venda.valor * 100), 0) / 100;
-        document.getElementById('total-vendas').textContent = vendas.length;
-        document.getElementById('total-valor').textContent = formatarDinheiro(total);
-        document.getElementById('total-canceladas').textContent = vendas.length - concluidas.length;
-        corpo.innerHTML = visiveis.length === 0 ? '<tr><td colspan="8">Nenhuma venda encontrada.</td></tr>' : visiveis.map(venda => `
-            <tr><td>VD-${String(venda.id).padStart(4, '0')}</td>
-            <td>${escaparHTML(venda.cliente)}<small>${escaparHTML(venda.telefone || '')}</small></td>
+        corpo.innerHTML = visiveis.length === 0 ? '<tr><td colspan="7">Nenhuma venda encontrada.</td></tr>' : visiveis.map(venda => `
+            <tr data-id="${venda.id}" class="linha-venda"><td>VD-${String(venda.id).padStart(4, '0')}</td>
+            <td>${escaparHTML(venda.cliente)}</td>
             <td>${escaparHTML(venda.item)}<small>${escaparHTML(venda.modelo)}</small></td>
-            <td>${escaparHTML(venda.responsavel)}</td><td>${venda.data.split('-').reverse().join('/')}</td>
-            <td>${venda.status === 'Cancelada' ? 'Cancelada' : 'Concluída'}</td><td>${formatarDinheiro(venda.valor)}</td>
-            <td><div class="acoes-linha"><a class="botao secundario" href="../OmniOS%20-%20Nova%20Venda/index.html?id=${venda.id}">Editar</a>
-            <button type="button" class="botao secundario" data-status="${venda.id}">${venda.status === 'Cancelada' ? 'Concluir' : 'Cancelar'}</button>
-            ${pode('excluir') ? `<button type="button" class="botao perigo" data-excluir="${venda.id}">Excluir</button>` : ''}</div></td></tr>
+            <td>${escaparHTML(venda.responsavel)}</td>
+            <td>${venda.status === 'Cancelada' ? 'Cancelada' : 'Concluída'}</td>
+            <td>${venda.data.split('-').reverse().join('/')}</td>
+            <td>${formatarDinheiro(venda.valor)}</td></tr>
         `).join('');
         document.getElementById('contagem-vendas').textContent = `Mostrando ${visiveis.length} de ${vendas.length} vendas · Página ${paginaVendas} de ${paginas}`;
         document.getElementById('paginas-vendas').innerHTML = `<button type="button" data-pagina="${paginaVendas - 1}" ${paginaVendas === 1 ? 'disabled' : ''}>Anterior</button><button type="button" data-pagina="${paginaVendas + 1}" ${paginaVendas === paginas ? 'disabled' : ''}>Próxima</button>`;
     } catch (erro) {
-        corpo.innerHTML = '<tr><td colspan="8">Não foi possível listar as vendas.</td></tr>';
+        corpo.innerHTML = '<tr><td colspan="7">Não foi possível listar as vendas.</td></tr>';
         document.getElementById('contagem-vendas').textContent = '';
         document.getElementById('paginas-vendas').innerHTML = '';
-        for (const id of ['total-vendas', 'total-valor', 'total-canceladas']) document.getElementById(id).textContent = '—';
         mostrarAviso(erro.message, 'erro');
     }
 }
@@ -72,10 +64,10 @@ function alterarVenda(id, excluir) {
 }
 
 document.getElementById('lista-vendas').addEventListener('click', evento => {
-    if (evento.target.dataset.status) alterarVenda(Number(evento.target.dataset.status), false);
-    if (evento.target.dataset.excluir) alterarVenda(Number(evento.target.dataset.excluir), true);
+    const linha = evento.target.closest('tr[data-id]');
+    if (linha) location.href = '../OmniOS%20-%20Detalhes%20Venda/index.html?id=' + linha.dataset.id;
 });
-for (const id of ['busca-venda', 'filtro-status', 'data-inicio', 'data-fim']) {
+for (const id of ['busca-venda', 'filtro-status', 'filtro-periodo']) {
     document.getElementById(id).addEventListener('input', () => { paginaVendas = 1; listarVendas(); });
 }
 document.getElementById('paginas-vendas').addEventListener('click', evento => {

@@ -1,0 +1,79 @@
+.linha-venda {
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.linha-venda:hover {
+    background-color: #172238;
+}
+
+.linha-venda td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    vertical-align: middle;
+}
+
+.tabela-vendas {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+}
+
+.tabela-vendas th,
+.tabela-vendas td {
+    padding: 14px 12px 14px 0;
+}
+
+.tabela-vendas th:nth-child(1),
+.tabela-vendas td:nth-child(1) {
+    width: 11%;
+}
+
+.tabela-vendas th:nth-child(2),
+.tabela-vendas td:nth-child(2) {
+    width: 19%;
+}
+
+.tabela-vendas th:nth-child(3),
+.tabela-vendas td:nth-child(3) {
+    width: 23%;
+}
+
+.tabela-vendas th:nth-child(4),
+.tabela-vendas td:nth-child(4) {
+    width: 14%;
+}
+
+.tabela-vendas th:nth-child(5),
+.tabela-vendas td:nth-child(5) {
+    width: 12%;
+}
+
+.tabela-vendas th:nth-child(6),
+.tabela-vendas td:nth-child(6) {
+    width: 10%;
+}
+
+.tabela-vendas th:nth-child(7),
+.tabela-vendas td:nth-child(7) {
+    width: 11%;
+    padding-right: 0;
+}
+
+.tabela-vendas td small {
+    display: none;
+}
+
+.tabela-vendas .status {
+    white-space: nowrap;
+}
+
+@media (max-width: 750px) {
+    .tabela-vendas {
+        min-width: 720px;
+    }
+
+    .vendas-painel {
+        overflow-x: auto;
+    }
+}

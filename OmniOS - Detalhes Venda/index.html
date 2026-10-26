@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Assistência, OmniOS">
+    <title>OmniOS - Venda</title>
+    <link rel="icon" type="image/png" href="../OmniOS%20-%20Main/imagens/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="../OmniOS%20-%20Main/imagens/favicon/favicon.svg">
+    <link rel="shortcut icon" href="../OmniOS%20-%20Main/imagens/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../OmniOS%20-%20Main/imagens/favicon/apple-touch-icon.png">
+    <link rel="stylesheet" href="../OmniOS%20-%20Detalhes/style.css">
+    <link rel="stylesheet" href="../comum.css">
+</head>
+<body data-acesso="vendas">
+    <aside class="sidebar">
+        <div class="logo"><div class="logo-icone"><img src="../OmniOS%20-%20Main/imagens/logo.jpeg" alt="Logo OmniOS"></div><h2>OmniOS</h2></div>
+        <nav class="menu" aria-label="Menu principal">
+            <a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
+            <a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
+            <a href="../OmniOS%20-%20Vendas/index.html" class="menu-item ativo" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
+        </nav>
+        <div class="sidebar-rodape">
+            <div class="barra-perfis"><div class="perfil"><img class="perfil-logo" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Perfil"><div class="perfil-info"><span class="nomeperfil"></span><p class="funcao-perfil"></p></div></div><hr class="linha"><a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a></div>
+        </div>
+    </aside>
+    <div class="pagina">
+        <header class="topo"><div><p class="caminho">Serviços / Vendas / <span id="crumb-venda">...</span></p><h1 id="titulo-venda">Venda</h1></div><div class="data">📅 Hoje</div></header>
+        <main>
+            <div id="nao-encontrada" class="painel aviso-vazio" hidden><p>Venda não encontrada.</p><a href="../OmniOS%20-%20Vendas/index.html">Voltar para Vendas</a></div>
+            <div id="conteudo-venda" hidden>
+                <div class="acoes-topo">
+                    <div class="etiquetas"><span id="badge-status" class="status"></span></div>
+                    <div class="acoes">
+                        <a class="btn-secundario" id="btn-editar" href="#">Editar venda</a>
+                        <button type="button" class="btn-secundario" id="btn-status"></button>
+                        <button type="button" class="btn-primario" id="btn-excluir">Excluir venda</button>
+                    </div>
+                </div>
+                <section class="detalhes-grid">
+                    <div class="coluna-principal">
+                        <div class="painel bloco"><h2>Dossiê da Venda</h2><div class="dossie">
+                            <div class="dado"><span class="dado-rotulo">Cliente</span><span class="dado-valor" id="d-cliente"></span></div>
+                            <div class="dado"><span class="dado-rotulo">Item</span><span class="dado-valor" id="d-item"></span></div>
+                            <div class="dado"><span class="dado-rotulo">Modelo</span><span class="dado-valor" id="d-modelo"></span></div>
+                            <div class="dado"><span class="dado-rotulo">Responsável</span><span class="dado-valor" id="d-responsavel"></span></div>
+                            <div class="dado"><span class="dado-rotulo">Data da venda</span><span class="dado-valor" id="d-data"></span></div>
+                            <div class="dado largo"><span class="dado-rotulo">Observações</span><span class="dado-valor" id="d-notas"></span></div>
+                        </div></div>
+                        <div class="painel bloco"><div class="bloco-cabecalho"><h2>Resumo financeiro</h2></div><div class="totais"><div class="linha-total"><span>Valor da venda</span><strong id="t-valor"></strong></div></div></div>
+                    </div>
+                    <div class="painel bloco linha-tempo-painel"><h2>Linha do Tempo</h2><ul class="linha-tempo" id="linha-tempo"></ul></div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="../comum.js"></script><script src="../autenticacao.js"></script><script src="../dados.js"></script><script src="script.js"></script>
+</body>
+</html>

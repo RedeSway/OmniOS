@@ -4,9 +4,22 @@ body { line-height: 1.45; }
 button, input, select, textarea { font: inherit; }
 button, a, input, select, textarea { touch-action: manipulation; }
 button:focus-visible, a:focus-visible { outline: 2px solid #93c5fd; outline-offset: 3px; }
-.sidebar { flex-shrink: 0; }
-.barra-perfis { height: auto; min-height: 120px; }
+.sidebar { flex-shrink: 0; display: flex; flex-direction: column; }
+.barra-perfis { height: auto; min-height: 120px; margin-top: auto; }
+.sidebar-rodape { margin-top: auto; }
+.sidebar-rodape .barra-perfis { margin-top: 8px; }
+.barra-perfis > .menu-item { margin-top: 10px; }
 .nomeperfil { overflow-wrap: anywhere; }
+.pagina-configuracoes .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    height: 100vh;
+    overflow-y: auto;
+}
+.pagina-configuracoes .pagina {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+}
 .area-pagina { padding: 28px 30px; }
 .area-pagina .cards { margin: 0 0 24px; padding: 0; }
 .bloco-form { background: #10182a; border: 1px solid #253047; border-radius: 10px; padding: 24px; margin-bottom: 24px; }
@@ -57,13 +70,23 @@ body.login { display: flex; justify-content: center; align-items: center; paddin
 .cartao-login .logo { padding: 0; margin-bottom: 20px; }
 @media (max-width: 900px) {
     body:not(.login) { flex-direction: column; }
+    .pagina-configuracoes .sidebar {
+        position: static;
+        height: auto;
+        overflow: visible;
+    }
+    .pagina-configuracoes .pagina {
+        width: 100%;
+        margin-left: 0;
+    }
     .sidebar { width: 100%; min-height: auto; padding: 14px; }
     .sidebar .menu { display: flex; flex-direction: row; flex-wrap: wrap; gap: 5px; }
     .sidebar .menu-item { padding: 9px; font-size: 13px; }
-    .sidebar .barra-perfis { min-height: auto; display: flex; align-items: center; gap: 16px; margin-top: 16px; }
+    .sidebar-rodape { margin-top: 24px; }
+    .sidebar .barra-perfis { min-height: auto; display: flex; align-items: center; gap: 16px; margin-top: 8px; }
     .sidebar .perfil { width: auto; flex: 1; }
     .sidebar .barra-perfis .botao { margin: 0; width: auto; }
-    .sidebar .linha { display: none; }
+    .sidebar .linha { display: block; }
     .pagina { width: 100%; }
     .topo { height: auto; min-height: 72px; padding: 18px; }
     .topo h1 { font-size: 22px; }

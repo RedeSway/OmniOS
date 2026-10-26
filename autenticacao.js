@@ -117,10 +117,12 @@ function iniciarAcesso() {
         document.querySelector('.nomeperfil').textContent = usuario.nome;
         document.querySelector('.funcao-perfil').textContent = usuario.cargo;
         document.querySelector('.perfil-logo').alt = usuario.nome;
+        if (usuario.foto) document.querySelector('.perfil-logo').src = usuario.foto;
         document.querySelectorAll('[data-permissao]').forEach(elemento => {
             elemento.hidden = !pode(elemento.dataset.permissao);
         });
-        document.getElementById('btn-sair').onclick = sair;
+        const botaoSair = document.getElementById('btn-sair');
+        if (botaoSair) botaoSair.onclick = sair;
         preencherResponsaveis();
     } catch (erro) {
         document.documentElement.hidden = true;
@@ -174,6 +176,7 @@ async function salvarPerfil(dados) {
     usuario.email = email;
     usuario.cargo = dados.cargo;
     usuario.ativo = dados.ativo;
+    if (dados.foto) usuario.foto = dados.foto;
     usuario.permissoes = {};
     for (const chave of Object.keys(PERMISSOES)) {
         usuario.permissoes[chave] = dados.cargo === 'Administrador' || dados.permissoes[chave] === true;

@@ -7,6 +7,14 @@
 <link rel="icon" href="../OmniOS%20-%20Main/imagens/favicon/favicon.ico">
 <link rel="stylesheet" href="../OmniOS%20-%20Main/style.css">
 <link rel="stylesheet" href="../comum.css">
+<style>
+.foto-perfil-campo { display: flex; flex-direction: column; gap: 8px; color: #cbd5e1; font-size: 14px; }
+.foto-perfil-editor { display: flex; align-items: center; gap: 14px; }
+.foto-perfil-preview { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; border: 1px solid #35405b; background: #111827; }
+.foto-perfil-campo input[type="file"] { color: #94a3b8; font-size: 12px; }
+.foto-perfil-ajuda { color: #94a3b8; font-size: 12px; }
+.foto-perfil-tabela { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px; }
+</style>
 </head>
 <body data-acesso="perfis">
 <aside class="sidebar">
@@ -14,15 +22,14 @@
 <nav class="menu" aria-label="Menu principal">
 <a href="../OmniOS%20-%20Main/index.html" class="menu-item"><span aria-hidden="true">⌂</span>Visão Geral</a>
 <a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
-<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
 <a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
-<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
 <a href="../OmniOS%20-%20Perfis/index.html" class="menu-item ativo" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
-<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
 </nav>
-<div class="barra-perfis"><div class="perfil"><img class="perfil-logo" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Perfil"><div class="perfil-info"><span class="nomeperfil"></span><p class="funcao-perfil"></p></div></div><button id="btn-sair" type="button" class="botao discreto">Sair da conta</button></div>
+<div class="sidebar-rodape">
+<div class="barra-perfis"><div class="perfil"><img class="perfil-logo" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Perfil"><div class="perfil-info"><span class="nomeperfil"></span><p class="funcao-perfil"></p></div></div><hr class="linha"><a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a></div>
+</div>
 </aside>
 <div class="pagina"><header class="topo"><div><p class="caminho">OmniOS / Perfis</p><h1>Perfis</h1></div><div class="data">📅 Hoje</div></header>
-<main class="area-pagina"><section class="bloco-form"><h2 id="titulo-form-perfil">Adicionar perfil</h2><p class="texto-ajuda">Administradores têm acesso a todas as funções. Nos outros cargos, escolha as permissões abaixo.</p><form id="form-perfil"><div class="grade-form"><label>Nome<input id="perfil-nome" required maxlength="100" autocomplete="name"></label><label>E-mail<input id="perfil-email" type="email" required maxlength="150" autocomplete="email"></label><label>Senha<input id="perfil-senha" type="password" minlength="8" autocomplete="new-password" required><small id="ajuda-senha">Mínimo de 8 caracteres.</small></label><label>Cargo<select id="perfil-cargo"><option>Atendente</option><option>Técnico</option><option>Administrador</option></select></label></div><fieldset><legend>Permissões</legend><div id="permissoes-perfil" class="grade-permissoes"></div></fieldset><label class="opcao"><input id="perfil-ativo" type="checkbox" checked>Perfil ativo</label><div class="barra-acoes"><button class="botao" type="submit">Salvar perfil</button><button class="botao secundario" id="cancelar-perfil" type="button">Limpar</button></div><p id="mensagem-perfil" role="status" aria-live="polite"></p></form></section><section class="bloco-form"><h2>Perfis cadastrados</h2><div class="tabela-rolagem"><table class="tabela-dados"><thead><tr><th>Nome</th><th>E-mail</th><th>Cargo</th><th>Situação</th><th>Ações</th></tr></thead><tbody id="lista-perfis"></tbody></table></div></section></main></div>
+<main class="area-pagina"><section class="bloco-form"><h2 id="titulo-form-perfil">Adicionar perfil</h2><p class="texto-ajuda">Administradores têm acesso a todas as funções. Nos outros cargos, escolha as permissões abaixo.</p><form id="form-perfil"><div class="grade-form"><label>Nome<input id="perfil-nome" required maxlength="100" autocomplete="name"></label><label>E-mail<input id="perfil-email" type="email" required maxlength="150" autocomplete="email"></label><label>Senha<input id="perfil-senha" type="password" minlength="8" autocomplete="new-password" required><small id="ajuda-senha">Mínimo de 8 caracteres.</small></label><label>Cargo<select id="perfil-cargo"><option>Atendente</option><option>Técnico</option><option>Administrador</option></select></label></div><label class="foto-perfil-campo">Foto do perfil<div class="foto-perfil-editor"><img id="foto-perfil-preview" class="foto-perfil-preview" src="../OmniOS%20-%20Main/imagens/perfil_1.png" alt="Pré-visualização da foto"><input id="perfil-foto" type="file" accept="image/png,image/jpeg,image/webp"><span class="foto-perfil-ajuda">Opcional. A imagem atual será usada como placeholder.</span></div></label><fieldset><legend>Permissões</legend><div id="permissoes-perfil" class="grade-permissoes"></div></fieldset><label class="opcao"><input id="perfil-ativo" type="checkbox" checked>Perfil ativo</label><div class="barra-acoes"><button class="botao" type="submit">Salvar perfil</button><button class="botao secundario" id="cancelar-perfil" type="button">Limpar</button></div><p id="mensagem-perfil" role="status" aria-live="polite"></p></form></section><section class="bloco-form"><h2>Perfis cadastrados</h2><div class="tabela-rolagem"><table class="tabela-dados"><thead><tr><th>Nome</th><th>E-mail</th><th>Cargo</th><th>Situação</th><th>Ações</th></tr></thead><tbody id="lista-perfis"></tbody></table></div></section></main></div>
 <script src="../comum.js"></script><script src="../autenticacao.js"></script><script src="script.js"></script>
 </body></html>

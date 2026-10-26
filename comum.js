@@ -115,11 +115,24 @@ function formatarDinheiro(valor) {
     return Number(valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function atualizarDataCabecalho() {
+    const hoje = new Date().toLocaleDateString('pt-BR', {
+        weekday: 'long',
+        day: '2-digit',
+        month: 'long'
+    });
+    for (const elemento of document.querySelectorAll('.data')) {
+        elemento.textContent = '📅 ' + hoje;
+    }
+}
+
 function dataValida(texto) {
     if (typeof texto !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(texto)) return false;
     const data = new Date(texto + 'T12:00:00Z');
     return !Number.isNaN(data.getTime()) && data.toISOString().slice(0, 10) === texto;
 }
+
+document.addEventListener('DOMContentLoaded', atualizarDataCabecalho);
 
 function validarVendaSalva(venda) {
     for (const campo of ['cliente', 'item', 'modelo', 'responsavel']) {

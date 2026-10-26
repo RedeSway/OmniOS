@@ -259,12 +259,6 @@ main {
     flex: 1;
 }
 
-.telefone-campo {
-    width: 200px;
-    flex-shrink: 0;
-}
-
-
 /* SEGUNDA LINHA */
 
 .aparelho-campo {
@@ -301,7 +295,6 @@ main {
 /* INPUTS */
 
 .input-grande,
-.input-telefone,
 .input-aparelho,
 .input-modelo,
 .input-valor,
@@ -337,7 +330,6 @@ main {
 }
 
 .input-grande:focus,
-.input-telefone:focus,
 .input-aparelho:focus,
 .input-modelo:focus,
 .input-valor:focus,
@@ -365,7 +357,6 @@ main {
 /* PLACEHOLDER */
 
 .input-grande::placeholder,
-.input-telefone::placeholder,
 .input-modelo::placeholder,
 .input-valor::placeholder,
 .descricao::placeholder {
@@ -587,7 +578,7 @@ main {
         flex-direction: column;
     }
 
-    .telefone-campo,
+
     .aparelho-campo {
         width: 100%;
     }
@@ -620,4 +611,4 @@ main {
 .mensagem-venda.erro { color: #f87171; }
 .mensagem-venda { margin: 12px 0 0; font-size: 12px; color: #93c5fd; }
 @media (max-width: 1000px) { .painel.volume { width: 95%; padding: 30px; } .linha-campos { flex-wrap: wrap; } .cliente-campo, .modelo-campo, .tecnico-campo, .data-campo { flex: 1 1 240px; } }
-@media (max-width: 600px) { .painel.volume { width: 100%; padding: 22px; } .linha-campos { flex-direction: column; } .linha-campos .campo, .valor-campo, .telefone-campo, .aparelho-campo { width: 100%; } .final-painel { align-items: flex-start; flex-direction: column; gap: 18px; } }
+@media (max-width: 600px) { .painel.volume { width: 100%; padding: 22px; } .linha-campos { flex-direction: column; } .linha-campos .campo, .valor-campo, .aparelho-campo { width: 100%; } .final-painel { align-items: flex-start; flex-direction: column; gap: 18px; } }

@@ -198,27 +198,27 @@ main {
 /* CARDS */
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin-bottom: 22px;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
 .card {
-    min-height: 105px;
-    padding: 20px;
+    min-height: 82px;
+    padding: 12px 14px;
     background-color: #121b2c;
     border: 1px solid #243047;
     border-radius: 12px;
 }
 
 .card p {
-    margin: 0 0 16px 0;
+    margin: 0 0 8px;
     color: #94a3b8;
     font-size: 12px;
 }
 
 .card strong {
-    font-size: 26px;
+    font-size: 22px;
     font-weight: 600;
 }
 
@@ -233,7 +233,17 @@ main {
 .painel {
     background-color: #121b2c;
     border: 1px solid #243047;
-    border-radius: 12px;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.ordens,
+.vendas-recentes {
+    height: 222px;
+}
+
+.conteudo + .conteudo .vendas-recentes {
+    margin-top: 10px;
 }
 
 .painel h2 {
@@ -242,15 +252,16 @@ main {
 }
 
 /* ORDENS */
-.ordens {
-    padding: 20px 22px;
+.ordens,
+.vendas-recentes {
+    padding: 18px 20px;
 }
 
 .painel-cabecalho {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
 }
 
 .painel-cabecalho a {
@@ -269,10 +280,16 @@ table {
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
+    table-layout: fixed;
+}
+
+.ordens table,
+.vendas-recentes table {
+    height: 140px;
 }
 
 th {
-    padding: 12px 0;
+    padding: 10px 0;
     text-align: left;
     color: #94a3b8;
     font-size: 10px;
@@ -280,12 +297,14 @@ th {
 }
 
 td {
-    padding: 14px 0;
+    height: 34px;
+    padding: 8px 0;
     border-top: 1px solid #253047;
 }
 
 .tabela-vazia td {
-    padding: 60px 20px;
+    height: 100px;
+    padding: 0 20px;
     text-align: center;
     color: #64748b;
     font-size: 12px;
@@ -303,6 +322,34 @@ td {
     font-size: 10px;
 }
 
+.legenda-grafico {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 10px;
+}
+
+.legenda-grafico span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legenda-grafico i {
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+}
+
+.legenda-ordens {
+    background-color: #58a6ff;
+}
+
+.legenda-vendas {
+    background-color: #34d399;
+}
+
 .grafico-vazio {
     height: 180px;
     display: flex;
@@ -316,17 +363,21 @@ td {
 }
 
 /* LINHAS DAS ORDENS */
-.ordens tr:not(.tabela-vazia) td {
+.ordens tr:not(.tabela-vazia) td,
+.vendas-recentes tr:not(.tabela-vazia) td {
     color: #94a3b8;
 }
 
-.ordens tr:not(.tabela-vazia) td:first-child {
+.ordens tr:not(.tabela-vazia) td:first-child,
+.vendas-recentes tr:not(.tabela-vazia) td:first-child {
     font-weight: bold;
     color: #f1f5f9;
 }
 
 .ordens tr:not(.tabela-vazia) td:nth-child(2),
-.ordens tr:not(.tabela-vazia) td:last-child {
+.ordens tr:not(.tabela-vazia) td:last-child,
+.vendas-recentes tr:not(.tabela-vazia) td:nth-child(2),
+.vendas-recentes tr:not(.tabela-vazia) td:last-child {
     color: #f1f5f9;
 }
 
@@ -415,8 +466,16 @@ td {
 
 .barra {
     width: 14px;
-    background-color: #58a6ff;
     border-radius: 3px 3px 0 0;
+    overflow: hidden;
+}
+
+.barra-ordens {
+    background-color: #58a6ff;
+}
+
+.barra-vendas {
+    background-color: #34d399;
 }
 
 .dia {
@@ -429,7 +488,7 @@ td {
 @media (max-width: 1100px) {
 
     .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .conteudo {
@@ -460,5 +519,264 @@ td {
         display: none;
     }
 
-}
+}
+
 .aviso { position: fixed; right: 24px; bottom: 24px; padding: 14px 20px; background: #7f1d1d; color: #fff; border-radius: 8px; z-index: 1000; max-width: calc(100vw - 48px); }
+
+/* Ajustes de layout: painel centralizado e indicadores mais compactos */
+.pagina {
+    width: calc(100% - 220px);
+    min-width: 0;
+}
+
+main {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 22px 28px 30px;
+}
+
+.boas-vindas {
+    max-width: 1440px;
+    margin: 0 auto 8px;
+    padding: 8px 12px !important;
+}
+
+.cards {
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.card {
+    min-height: 82px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.card p {
+    margin: 0 0 8px;
+    font-size: 12px;
+}
+
+.card strong {
+    font-size: 22px;
+}
+
+.conteudo {
+    gap: 14px;
+}
+
+.ordens,
+.vendas-recentes,
+.volume {
+    padding: 18px 20px;
+}
+
+.grafico-vazio {
+    height: 145px;
+}
+
+@media (min-width: 1600px) {
+    main {
+        max-width: 1500px;
+    }
+}
+
+/* Layout do dashboard */
+.cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.card {
+    min-height: 88px;
+    padding: 14px 16px;
+}
+
+.card p {
+    margin-bottom: 8px;
+    font-size: 11px;
+}
+
+.card strong {
+    font-size: 22px;
+}
+
+.conteudo {
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.conteudo-principal {
+    grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr);
+    align-items: stretch;
+}
+
+.conteudo-vendas {
+    display: block;
+}
+
+.painel {
+    margin: 0;
+    border-radius: 10px;
+}
+
+.ordens,
+.vendas-recentes {
+    height: auto;
+    min-height: 238px;
+    padding: 20px 22px;
+}
+
+.volume {
+    min-height: 238px;
+    padding: 20px 22px;
+}
+
+.conteudo-vendas .vendas-recentes {
+    width: 100%;
+    margin-top: 0;
+}
+
+.ordens table,
+.vendas-recentes table {
+    height: auto;
+}
+
+.tabela-vazia td {
+    height: 110px;
+}
+
+@media (max-width: 1100px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .conteudo-principal {
+        grid-template-columns: 1fr;
+    }
+
+    .volume {
+        min-height: 220px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .ordens,
+    .vendas-recentes,
+    .volume {
+        padding: 16px;
+    }
+}
+
+/* Página de vendas alinhada ao padrão de ordens */
+.pagina-vendas .area-pagina {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 28px 30px;
+}
+
+.pagina-vendas-conteudo {
+    display: block;
+}
+
+.pagina-vendas .barra-acoes {
+    margin-bottom: 20px;
+}
+
+.pagina-vendas .vendas-filtros {
+    align-items: end;
+    margin: 0 0 20px;
+    gap: 14px;
+}
+
+.pagina-vendas .filtro-campo {
+    min-width: 150px;
+}
+
+.pagina-vendas .busca-venda-campo {
+    flex: 1;
+    min-width: 260px;
+}
+
+.pagina-vendas .vendas-lista {
+    margin: 0;
+    padding: 20px 22px;
+    border-radius: 10px;
+}
+
+.pagina-vendas .tabela-dados {
+    font-size: 12px;
+}
+
+.pagina-vendas .tabela-dados th,
+.pagina-vendas .tabela-dados td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #253047;
+}
+
+.pagina-vendas .tabela-dados th {
+    color: #94a3b8;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.pagina-vendas .tabela-dados td {
+    color: #cbd5e1;
+}
+
+.pagina-vendas .tabela-dados td:first-child {
+    color: #f1f5f9;
+    font-weight: bold;
+}
+
+.pagina-vendas .tabela-dados td small {
+    color: #94a3b8;
+}
+
+.pagina-vendas .acoes-linha {
+    gap: 6px;
+}
+
+.pagina-vendas .acoes-linha .botao {
+    padding: 7px 10px;
+    font-size: 11px;
+}
+
+@media (max-width: 900px) {
+    .pagina-vendas .vendas-filtros {
+        align-items: stretch;
+    }
+
+    .pagina-vendas .filtro-campo,
+    .pagina-vendas .busca-venda-campo {
+        flex: 1 1 220px;
+    }
+}
+
+@media (max-width: 600px) {
+    .pagina-vendas .area-pagina {
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 750px) {
+    .pagina {
+        width: 100%;
+    }
+    main {
+        padding: 14px;
+    }
+    .boas-vindas {
+        padding: 6px 2px !important;
+    }
+}

@@ -39,16 +39,11 @@
         <nav class="menu" aria-label="Menu principal">
 <a href="../OmniOS%20-%20Main/index.html" class="menu-item ativo"><span aria-hidden="true">⌂</span>Visão Geral</a>
 <a href="../OmniOS%20-%20Ordens/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">☷</span>Ordens de Serviço</a>
-<a href="../OmniOS%20-%20Nova%20Ordem/index.html" class="menu-item" data-permissao="ordens"><span aria-hidden="true">╋</span>Nova OS</a>
 <a href="../OmniOS%20-%20Vendas/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">$</span>Vendas</a>
-<a href="../OmniOS%20-%20Nova%20Venda/index.html" class="menu-item" data-permissao="vendas"><span aria-hidden="true">+</span>Nova Venda</a>
-<a href="../OmniOS%20-%20Perfis/index.html" class="menu-item" data-permissao="perfis"><span aria-hidden="true">♙</span>Perfis</a>
-<a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
 </nav>
-
-
-        <!-- PERFIS -->
-        <div class="barra-perfis">
+        <!-- RODAPÉ DO SIDEBAR -->
+        <div class="sidebar-rodape">
+                <div class="barra-perfis">
 
             <div class="perfil">
 
@@ -73,12 +68,13 @@
             </div>
 
 
-            <button id="btn-sair" type="button" class="botao discreto">Sair da conta</button>
+            
             <!-- LINHA SEPARADORA -->
             <hr class="linha">
+        <a href="../OmniOS%20-%20Configuracoes/index.html" class="menu-item"><span aria-hidden="true">⚙</span>Configurações</a>
 
         </div>
-
+        </div>
     </aside>
 
 
@@ -105,12 +101,12 @@
 
 
         <main>
-<div class="boas-vindas" style="padding: 20px 30px"><p>Bem-vindo ao OmniOS. Use o menu para acessar suas funções.</p></div>
+<div class="margem" style="padding: 20px 30px"><p></p></div>
 
             <!-- CARDS -->
-            <section class="cards">
+            <section class="cards" aria-label="Resumo de ordens e vendas">
 
-                <article class="card">
+                <article class="card card-ordem">
 
                     <p>Ordens Abertas</p>
 
@@ -119,7 +115,7 @@
                 </article>
 
 
-                <article class="card">
+                <article class="card card-ordem">
 
                     <p>Em Execução</p>
 
@@ -128,7 +124,7 @@
                 </article>
 
 
-                <article class="card">
+                <article class="card card-ordem">
 
                     <p>Concluídos Hoje</p>
 
@@ -137,19 +133,22 @@
                 </article>
 
 
-                <article class="card">
+                <article class="card card-ordem">
 
-                    <p>Valor Total do Mês</p>
+                    <p>Lucro estimado do mês (OS)</p>
 
                     <strong>R$ 0,00</strong>
 
                 </article>
 
+                <article class="card"><p>Vendas registradas</p><strong id="painel-total-vendas">0</strong></article>
+                <article class="card"><p>Faturamento em vendas</p><strong id="painel-faturamento-vendas">R$ 0,00</strong></article>
+                <article class="card"><p>Vendas canceladas</p><strong id="painel-vendas-canceladas">0</strong></article>
+                <article class="card"><p>Ticket médio</p><strong id="painel-ticket-medio">R$ 0,00</strong></article>
             </section>
 
-
             <!-- CONTEÚDO -->
-            <section class="conteudo">
+            <section class="conteudo conteudo-principal">
 
                 <!-- ORDENS -->
                 <div class="painel ordens">
@@ -207,6 +206,11 @@
                         Média de entrada por dia da semana
                     </p>
 
+                    <div class="legenda-grafico" aria-label="Legenda do gráfico">
+                        <span><i class="legenda-ordens"></i>Ordens</span>
+                        <span><i class="legenda-vendas"></i>Vendas</span>
+                    </div>
+
                     <div class="grafico-vazio">
 
                         <span>
@@ -215,6 +219,13 @@
 
                     </div>
 
+                </div>
+
+            </section>
+            <section class="conteudo conteudo-vendas">
+                <div class="painel vendas-recentes">
+                    <div class="painel-cabecalho"><h2>Vendas Recentes</h2><a href="../OmniOS%20-%20Vendas/index.html">Ver todas</a></div>
+                    <table><thead><tr><th>ID</th><th>Cliente</th><th>Item / Modelo</th><th>Data</th><th>Status</th><th>Valor</th></tr></thead><tbody id="painel-vendas-recentes"><tr class="tabela-vazia"><td colspan="6">Nenhuma venda cadastrada.</td></tr></tbody></table>
                 </div>
 
             </section>

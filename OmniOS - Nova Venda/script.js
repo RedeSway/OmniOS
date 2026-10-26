@@ -1,6 +1,5 @@
 const CHAVE = 'omnios_vendas';
 const formulario = document.getElementById('form-venda');
-const telefone = document.getElementById('telefone');
 const mensagem = document.getElementById('mensagem-venda');
 const idVenda = Number(new URLSearchParams(location.search).get('id'));
 let vendaSalva = false;
@@ -19,12 +18,11 @@ function salvarVenda(evento) {
     const cliente = campos.namedItem('cliente').value.trim();
     const item = campos.namedItem('item').value.trim();
     const modelo = campos.namedItem('modelo').value.trim();
-    const digitos = telefone.value.replace(/\D/g, '');
     const valor = Number(campos.namedItem('valor').value);
 
-    if (!cliente || !item || !modelo || digitos.length < 10 || digitos.length > 11
+    if (!cliente || !item || !modelo
         || !Number.isFinite(valor) || valor < 0.01 || !Number.isSafeInteger(Math.round(valor * 100))) {
-        informar('Preencha os dados da venda, um telefone com DDD e um valor válido.', true);
+        informar('Preencha os dados da venda e um valor válido.', true);
         return;
     }
 
@@ -38,7 +36,6 @@ function salvarVenda(evento) {
         venda = {
             id,
             cliente,
-            telefone: formatarTelefone(telefone.value),
             item,
             modelo,
             valor: Math.round(valor * 100) / 100,
@@ -63,10 +60,6 @@ function salvarVenda(evento) {
     setTimeout(() => { location.href = '../OmniOS%20-%20Vendas/index.html'; }, 1000);
 }
 
-telefone.addEventListener('input', () => {
-    telefone.value = formatarTelefone(telefone.value);
-});
-
 formulario.addEventListener('submit', salvarVenda);
 formulario.addEventListener('reset', () => informar(''));
 
@@ -84,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.title = 'OmniOS - Editar venda';
             document.querySelector('.caminho').textContent = 'Vendas / Editar venda';
             document.querySelector('.final-painel h3').textContent = 'Edição da venda';
-            for (const campo of ['cliente', 'telefone', 'item', 'modelo', 'valor', 'notas', 'responsavel', 'data']) {
+            for (const campo of ['cliente', 'item', 'modelo', 'valor', 'notas', 'responsavel', 'data']) {
                 const input = formulario.elements.namedItem(campo);
                 if (campo === 'responsavel' && !Array.from(input.options).some(opcao => opcao.value === venda[campo])) {
                     const opcao = document.createElement('option');
