@@ -78,8 +78,7 @@ npm run deploy
 
 É necessário ter Node.js 22 ou superior, Docker em execução e uma conta com acesso ao Cloudflare Containers. O deploy informa o endereço HTTPS em `workers.dev`.
 
-Consulte [o guia de Cloudflare Containers](docs/CLOUDFLARE-CONTAINERS.md) ou [a configuração para Dokploy e Cloudflare Tunnel](docs/HOSPEDAGEM.md).
-
-## Apresentação
-
-O [roteiro da apresentação](docs/APRESENTACAO.md) contém a divisão das falas, os passos da demonstração e as limitações do protótipo.
+## Nomes
+- **Jose Gustavo Rodrigues Simoncini**
+- **Daniel Goncalves Araujo**
+- **Renan Andre Gomes**
